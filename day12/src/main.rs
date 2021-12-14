@@ -30,10 +30,10 @@ fn main() {
 
         ";
 
-        let res = parse_input(input);
-        let part_1 = count_pathes(&res, "start", "end", &mut vec![]);
-        let part_2 = count_pathes_2(&res, "start", "end", &mut vec![], None);
-        println!("Part1 : {}. Part2 : {}", part_1, part_2);
+    let res = parse_input(input);
+    let part_1 = count_pathes(&res, "start", "end", &mut Vec::with_capacity(100));
+    let part_2 = count_pathes_2(&res, "start", "end", &mut Vec::with_capacity(100), true);
+    println!("Part1 : {}. Part2 : {}", part_1, part_2);
 }
 
 fn parse_input(input: &str) -> HashMap<String, Vec<String>> {
@@ -85,15 +85,11 @@ fn count_pathes_2(
     start: &str,
     end: &str,
     visited: &mut Vec<String>,
-    visited_lower: Option<&str>,
+    // visited_lower: Option<&str>,
+    can_visit_lower: bool,
 ) -> u32 {
     let mut count = 0;
     visited.push(start.to_string());
-    let used = visited
-        .iter()
-        .map(|it| it.clone())
-        .filter(|it| !is_uppercase(it))
-        .collect::<Vec<String>>();
     if start == end {
         // println!("{:?}", visited);
         count += 1;
@@ -101,10 +97,12 @@ fn count_pathes_2(
         let neighbours = map.get(start).unwrap();
         for n in neighbours {
             if n != "start" {
-                if used.contains(n) && visited_lower.is_none() {
-                    count += count_pathes_2(map, n, end, visited, Some(n.as_str()));
-                } else if !used.contains(n) {
-                    count += count_pathes_2(map, n, end, visited, visited_lower);
+                if !is_uppercase(n) && visited.contains(n) {
+                    if can_visit_lower {
+                        count += count_pathes_2(map, n, end, visited, false);
+                    }
+                } else {
+                    count += count_pathes_2(map, n, end, visited, can_visit_lower);
                 }
             }
         }
@@ -114,12 +112,11 @@ fn count_pathes_2(
 }
 
 fn is_uppercase(s: &str) -> bool {
-    &s.to_uppercase() == s
+    s.chars().any(|it| it.is_ascii_uppercase()) 
 }
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
 
     use crate::{count_pathes, count_pathes_2, parse_input};
 
@@ -185,7 +182,10 @@ mod tests {
 
         let res = parse_input(input);
         assert_eq!(226, count_pathes(&res, "start", "end", &mut vec![]));
-        assert_eq!(3509, count_pathes_2(&res, "start", "end", &mut vec![], None));
+        assert_eq!(
+            3509,
+            count_pathes_2(&res, "start", "end", &mut vec![], None)
+        );
     }
 
     #[test]
@@ -222,6 +222,9 @@ mod tests {
         let res = parse_input(input);
         let mut visited = vec!["start".to_string()];
         assert_eq!(5756, count_pathes(&res, "start", "end", &mut visited));
-        assert_eq!(144603, count_pathes_2(&res, "start", "end", &mut visited, None));
+        assert_eq!(
+            144603,
+            count_pathes_2(&res, "start", "end", &mut visited, None)
+        );
     }
 }
