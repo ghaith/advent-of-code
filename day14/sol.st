@@ -47,7 +47,7 @@ FUNCTION main : DINT
     END_WHILE;
     letter_count[next] := letter_count[next] + 1;
     
-    FOR steps := 0 TO 39 DO
+    FOR steps := 0 TO 7000 DO
         printf('Step : %d$n$t', steps);
         step(&letter_count, &combination_count);
     END_FOR
