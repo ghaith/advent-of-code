@@ -8,7 +8,7 @@ import (
 )
 
 func Day1() {
-	input,err := utils.ReadInput("day1/day1_1.txt")
+	input, err := utils.ReadInput("day1/input.txt")
 
 	if err != nil {
 		fmt.Println(err)
@@ -23,13 +23,13 @@ func Day1() {
 func part1(input []string) int {
 	max := -1
 
-	var current int = 0;
+	var current int = 0
 
-	for _,value := range input {
+	for _, value := range input {
 		//If this is an empty line, update max, set current to 0
 		if value == "" {
-			max = utils.Max(max,current)
-			current = 0;
+			max = utils.Max(max, current)
+			current = 0
 			continue
 		}
 
@@ -39,7 +39,7 @@ func part1(input []string) int {
 		}
 		current += next
 	}
-	max = utils.Max(max,current)
+	max = utils.Max(max, current)
 
 	return max
 }
@@ -47,13 +47,13 @@ func part1(input []string) int {
 func part2(input []string) int {
 	var res []int
 
-	var current int = 0;
+	var current int = 0
 
-	for _,value := range input {
+	for _, value := range input {
 		//If this is an empty line, update max, set current to 0
 		if value == "" {
-			res = append(res,current)
-			current = 0;
+			res = append(res, current)
+			current = 0
 			continue
 		}
 
@@ -63,7 +63,7 @@ func part2(input []string) int {
 		}
 		current += next
 	}
-	res = append(res,current)
+	res = append(res, current)
 
 	sort.Ints(res)
 
