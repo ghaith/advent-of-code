@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"ghaith/aoc2022/day1"
 	"ghaith/aoc2022/day2"
+	"ghaith/aoc2022/day3"
 	"os"
 	"strconv"
 )
@@ -21,5 +22,7 @@ func main() {
 		day1.Day1()
 	case 2:
 		day2.Day2()
+	case 3:
+		day3.Day3()
 	}
 }
