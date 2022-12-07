@@ -11,9 +11,9 @@ func TestPart1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	tree,_ := createFilesystem(data,1)
-	calculateSize(tree)
-	assert(t, 95437 ,part1(tree))
+	tree, _ := createFilesystem(data, 1)
+	tree, _ = calculateSize(tree)
+	assert(t, 95437, part1(tree))
 
 }
 
@@ -23,15 +23,14 @@ func TestPart2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	tree,_ := createFilesystem(data,1)
-	size := calculateSize(tree)
-	assert(t, 24933642,part2(tree, size))
+	tree, _ := createFilesystem(data, 1)
+	tree, size := calculateSize(tree)
+	assert(t, 24933642, part2(tree, size))
 
+}
 
-} 
-
-func assert(t *testing.T, left,right int) {
+func assert(t *testing.T, left, right int) {
 	if left != right {
-		t.Errorf("Expected %d but was %d", left,right)
+		t.Errorf("Expected %d but was %d", left, right)
 	}
 }
