@@ -39,3 +39,28 @@ func Sum(array []int) int {
  }  
  return result  
 }  
+
+func FindMax(slice []int) int{
+	m := 99999
+	for i, e := range slice {
+			if i==0 || e > m {
+					m = e
+			}
+	}
+	return m
+}
+
+func Index(vs []int, t int) int {
+		for i, v := range vs {
+        if v == t {
+            return i
+        }
+    }
+    return -1
+}
+
+func Reverse[S ~[]E, E any](s S)  {
+    for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+        s[i], s[j] = s[j], s[i]
+    }
+}
