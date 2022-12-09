@@ -10,6 +10,7 @@ import (
 	"ghaith/aoc2022/day6"
 	"ghaith/aoc2022/day7"
 	"ghaith/aoc2022/day8"
+	"ghaith/aoc2022/day9"
 	"os"
 	"strconv"
 )
@@ -39,5 +40,7 @@ func main() {
 		day7.Day7()
 	case 8:
 		day8.Day8()
+	case 9:
+		day9.Day9()
 	}
 }

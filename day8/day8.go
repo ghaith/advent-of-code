@@ -25,11 +25,11 @@ func Day8() {
 }
 
 func part1(input []string) int {
-	treeMap := generateMap(input)
+	grid := generateMap(input)
 	// visible := 2 * len(treeMap) - 2 + 2 * len(treeMap[0]) - 2
 	var visible []Coordinates
 
-	for i, row := range treeMap {
+	for i, row := range grid {
 		for j, value := range row {
 			coordinate := Coordinates{
 				i,
@@ -39,14 +39,14 @@ func part1(input []string) int {
 			rightView := row[j+1:]
 			if !slices.Contains(visible, coordinate) {
 				//See if the value is max in the row from the left
-				if isEdge(treeMap, coordinate) || value > utils.FindMax(leftView) || value > utils.FindMax(rightView) {
+				if isEdge(grid, coordinate) || value > utils.FindMax(leftView) || value > utils.FindMax(rightView) {
 					visible = append(visible, coordinate)
 				}
 			}
 		}
 	}
 
-	transposed := transpose(treeMap)
+	transposed := transpose(grid)
 	for i, row := range transposed {
 		for j, value := range row {
 			coordinate := Coordinates{
@@ -98,6 +98,7 @@ func part2(input []string) int {
 			}
 		}
 	}
+
 	for i, row := range transposed {
 		for j, value := range row {
 			coordinate := Coordinates{
