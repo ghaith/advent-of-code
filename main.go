@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"ghaith/aoc2022/day1"
+	"ghaith/aoc2022/day10"
 	"ghaith/aoc2022/day2"
 	"ghaith/aoc2022/day3"
 	"ghaith/aoc2022/day4"
@@ -42,5 +43,7 @@ func main() {
 		day8.Day8()
 	case 9:
 		day9.Day9()
+	case 10:
+		day10.Day10()
 	}
 }
