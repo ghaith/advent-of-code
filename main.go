@@ -5,6 +5,7 @@ import (
 	"ghaith/aoc2022/day1"
 	"ghaith/aoc2022/day10"
 	"ghaith/aoc2022/day11"
+	"ghaith/aoc2022/day12"
 	"ghaith/aoc2022/day2"
 	"ghaith/aoc2022/day3"
 	"ghaith/aoc2022/day4"
@@ -48,5 +49,7 @@ func main() {
 		day10.Day10()
 	case 11:
 		day11.Day11()
+	case 12:
+		day12.Day12()
 	}
 }
