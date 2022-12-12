@@ -1,10 +1,12 @@
 package day12
 
 import (
+	"container/heap"
 	"fmt"
 	"ghaith/aoc2022/utils"
 	"math"
-	"container/heap"
+
+	// "golang.org/x/exp/slices"
 )
 
 type Coordinate struct {
@@ -129,39 +131,56 @@ func (h *Heap) Pop() any {
 	return x
 }
 
-func calculateShortestPath(graph *Graph, startNode, endNode *Node) (path []*Node){
-	visited := make(map[Coordinate]bool)
-	prev := make(map[*Node]*Node)
-	h := &Heap{startNode}
-	heap.Init(h)
+func calculateShortestPath(graph *Graph, startNodes []*Node, endNode *Node) (path []*Node){
+	for _, startNode := range startNodes {
+		// if slices.Contains(path, startNode) {
+		// 	fmt.Println("Path contains ", *startNode)
+		// 	idx := slices.Index(path, startNode)
+		// 	path = path[idx:]
+		// 	continue
+		// }
 
-	startNode.calculatedValue = 0
+		visited := make(map[Coordinate]bool)
+		dists := make(map[*Node]int)
+		prev := make(map[*Node]*Node)
+		dists[startNode] = 0
+		startNode.calculatedValue = 0
+		h := &Heap{startNode}
+		heap.Init(h)
 
-	for h.Len() > 0 {
-		current := h.Pop().(*Node)
-		visited[current.position] = true
-		edges := graph.Edges[&current.position]
-		for _, edge := range edges {
-			if !visited[edge.node.position] {
-				h.Push(edge.node)
-				if current.calculatedValue+edge.weight < edge.node.calculatedValue {
-					edge.node.calculatedValue = current.calculatedValue + edge.weight
-					prev[edge.node] = current
+		for h.Len() > 0 {
+			if visited[endNode.position] {
+				break
+			}
+
+			item := heap.Pop(h).(*Node)
+			for _,edge := range graph.Edges[&item.position] {
+				dest := edge.node
+				dist := dists[item] + edge.weight
+				if tentativeDist, ok := dists[dest]; !ok || dist < tentativeDist {
+					dists[dest] = dist
+					dest.calculatedValue = dist
+					prev[dest] = item
+					heap.Push(h, edge.node)
 				}
 			}
+			visited[item.position] = true
+
 		}
-	}
+		if !visited[endNode.position] {
+			continue	
+		}
+		nextPath := []*Node{endNode}
+		for next := prev[endNode]; next != nil; next = prev[next] {
+			nextPath = append(nextPath, next)
+		}
 
-	path = append(path, endNode) 
-	for next := prev[endNode]; next != nil; next = prev[next] {
-		path = append(path, next)
-	}
-	// Reverse path.
-	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
-		path[i], path[j] = path[j], path[i]
-	}
+		if len(path) == 0 || len(nextPath) < len(path) {
+			path = nextPath
+		}
 
-	return 
+	}
+	return path
 }
 
 
@@ -179,14 +198,22 @@ func Day12() {
 
 func part1(input []string) int {
 	g,start,end := buildGraph(input)
-	path := calculateShortestPath(g, start, end)
-	for _, entry := range path {
-		fmt.Print(string(*&entry.name))
-	}
-	fmt.Println()
+	path := calculateShortestPath(g, []*Node {start} , end)
+	// for _, entry := range path {
+	// 	fmt.Print(string(*&entry.name))
+	// }
+	// fmt.Println()
 	return len(path) - 1 //Don't count start
 }
 
 func part2(input []string) int {
-	return 0
+	g,start,end := buildGraph(input)
+	startPathes := []*Node {start}
+	for _, node := range g.Nodes {
+		if node.name == 'a' {
+			startPathes = append(startPathes, node)
+		}
+	}
+	path := calculateShortestPath(g, startPathes , end)
+	return len(path) - 1 //Don't count start
 }

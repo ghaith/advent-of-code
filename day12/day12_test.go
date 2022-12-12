@@ -22,7 +22,7 @@ func TestPart2(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assert(t, 2713310158, part2(data))
+	assert(t, 29, part2(data))
 
 }
 
