@@ -64,3 +64,10 @@ func Reverse[S ~[]E, E any](s S)  {
         s[i], s[j] = s[j], s[i]
     }
 }
+
+func Sign(value int) int {
+	if value < 0 {
+		return -1
+	}
+	return 1
+}
