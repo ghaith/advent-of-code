@@ -2,7 +2,7 @@ package day1
 
 import (
 	"fmt"
-	utils "ghaith/aoc2022/utils"
+	"ghaith/aoc2022/utils"
 	"sort"
 	"strconv"
 )
