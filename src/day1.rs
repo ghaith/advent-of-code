@@ -1,7 +1,11 @@
 pub fn run() {
     let input = std::include_str!("day1/input.txt");
-    println!("{}", part1(input));
-    println!("{}", part2(input));
+    println!("Running Day 1");
+    println!("-----------------");
+    println!("Part 1 : {}", part1(input));
+    println!("-----------------");
+    println!("Part 2: {}", part2(input));
+    println!("-----------------");
 }
 fn part1(input: &str) -> u32 {
     input
@@ -72,7 +76,7 @@ fn part2(input: &str) -> u32 {
                 .filter_map(|it| it.to_digit(10))
                 .next_back()
                 .unwrap();
-            dbg!(first * 10 + last)
+            first * 10 + last
         })
         .sum()
 }

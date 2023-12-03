@@ -6,8 +6,12 @@ pub fn run() {
     };
 
     let input = std::include_str!("day2/input.txt");
-    println!("{}", part1(input, &required));
-    println!("{}", part2(input));
+    println!("Running Day 2");
+    println!("-----------------");
+    println!("Part 1 : {}", part1(input, &required));
+    println!("-----------------");
+    println!("Part 2: {}", part2(input));
+    println!("-----------------");
 }
 
 struct Cube {
